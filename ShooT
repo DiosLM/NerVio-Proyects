@@ -1,3 +1,143 @@
 //proyecto shoot em up, se va ha realizar por: 
 
 #include <stdio.h>
+
+
+
+
+//Movimiento de la nave aun por corregir
+
+
+
+//struc de la nave, punto x, punto y, el desplazamiento en x, desplazamiento en y, tamaño de la representacion de la nave;
+struct TForm
+{
+  float Px;
+  float Py;
+  int despx=0;
+  int despy=0;
+  int Radio=20;
+};
+
+TForm Alfa;
+//angulo 
+float ang=0.0;
+//aceleracion
+float ace=0.0;
+//numero pi
+const float M_PI=3.14159265358979323846;
+
+//declaracion de funciones
+void DrawF(float min1, float max1, float min2, float max2);
+void Rotar(float *x, float *y, float cx, float cy, float dangulo);
+
+
+//rotar
+void Rotar(float *x, float *y, float cx, float cy, float dangulo){
+  float dx = *x - cx, dy = *y - cy, r = sqrt(dx*dx + dy*dy), a = atan2(dy, dx);
+  a -= dangulo / 180 * M_PI;
+  *x = cx + r*cos(a);
+  *y = cy + r*sin(a);
+}
+
+
+// funcion de pintado de local a global
+void DrawF(float min1, float max1, float min2, float max2){
+ 	int i;
+  //puntos con valores entre 0 y 1
+  float x[5]{0.2,0.8,0.2,0.8,0.2};
+  float y[5]{0.2,0.2,0.8,0.8,0.2};
+  float cx=0.5,cy=0.5;
+
+  
+  for (i = 0; i < 5; i++)
+  {
+    Rotar(&x[i],&y[i],cx,cy,ang);
+    
+  }
+
+	for (i = 0; i < 4; i++)
+	{
+
+		ESAT::DrawLine(min1+(x[i]*(max1-min1)),min2+(y[i]*(max2-min2)),min1+(x[i+1]*(max1-min1)),min2+(y[i+1]*(max2-min2)));
+	}
+}
+
+// todo esto hay que añadirlo en alguna funcion para guardarlo como libreria
+
+  //esto va fuera del while de ventana
+   srand(time(NULL));
+   Alfa.Px=100+rand()%600;
+   Alfa.Py=80+rand()%420;
+ 
+ 
+  
+   
+   //esto va dentro del while de ventana
+
+    //llamada a la funcion de pintado con los puntos de x e y + el desplazamiento + el tamaño
+   DrawF(Alfa.Px+Alfa.Radio+Alfa.despx,Alfa.Px-Alfa.Radio+Alfa.despx,Alfa.Py-Alfa.Radio+Alfa.despy,Alfa.Py+Alfa.Radio+Alfa.despy);
+
+
+    //desplazamiento aplicado con senos y cosenos * la aceleracion
+    Alfa.despx +=cos(ang*2*M_PI/360)*ace;
+    Alfa.despy +=sin(ang*2*M_PI/360)*ace;
+    if(ace>0){
+      ace-=0.15;
+    }
+    if (ace<0)
+    {
+      ace=0;
+    }
+    if ((Alfa.Py+Alfa.despy)<0)
+      {
+        Alfa.despy=0;
+        Alfa.Py=599;
+      }
+       if ((Alfa.Py+Alfa.despy)>600)
+      {
+        Alfa.despy=0;
+        Alfa.Py=1;
+      }
+      if ((Alfa.Px+Alfa.despx)<0)
+      {
+        Alfa.despx=0;
+        Alfa.Px=799;
+      }
+      if ((Alfa.Px+Alfa.despx)>800)
+      {
+        Alfa.despx=0;
+        Alfa.Px=1;
+      }
+       
+      
+    if(ESAT::IsKeyPressed('W')){
+      if (ace<=10)
+      {
+        ace+=1;
+      }
+    }
+    if(ESAT::IsKeyPressed('A')){
+    ang-=1.8;
+    }
+    if(ESAT::IsKeyPressed('D')){
+    ang+=1.8;
+    }
+    
+   if(ESAT::IsSpecialKeyPressed(ESAT::kSpecialKey_Left)){
+    ang-=1.8;
+  
+   }
+   if(ESAT::IsSpecialKeyPressed(ESAT::kSpecialKey_Up)){
+     if (ace<=10)
+      {
+        ace+=1;
+      }
+    
+   }
+   
+   if(ESAT::IsSpecialKeyPressed(ESAT::kSpecialKey_Right)){
+    ang+=1.8;
+    
+   }
+    
