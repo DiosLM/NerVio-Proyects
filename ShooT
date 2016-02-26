@@ -5,9 +5,7 @@
 
 
 
-//Movimiento de la nave aun por corregir
-
-
+/*Movimiento de la nave aun por corregir
 
 //struc de la nave, punto x, punto y, el desplazamiento en x, desplazamiento en y, tamaño de la representacion de la nave;
 struct TForm
@@ -141,3 +139,4 @@ void DrawF(float min1, float max1, float min2, float max2){
     
    }
     
+*/
