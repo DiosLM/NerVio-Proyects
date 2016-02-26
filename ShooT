@@ -140,3 +140,53 @@ void DrawF(float min1, float max1, float min2, float max2){
    }
     
 */
+
+
+
+/* Funciones de disparo de IMANOL
+-------------------------
+struct TDisparo{  //Estructura del disparo, coordenada inicial del disparo y angulo es suficiente
+  float x,y;      //
+  float angulo;   //
+}disparo[100];    //He declarado 100 estructuras para 100 balas
+-------------------------
+void dispara(float xi,float yi,float angulo){   // GENERAR BALA // xi,yi coord centrales locales de la nave   angulo, angulo de la nave
+                                                //EN EL MOMENTO DE DIPARO
+    if(disparo[tiro].x>800||disparo[tiro].x<0||disparo[tiro].y>600||disparo[tiro].y<0){ //Comprueba que la bala que toca no esta ya en
+                                                                                        //pantalla, evitando que desaparezcan en trayecto
+      disparo[tiro].x=xi+nave.posx[0]*nave.tam; //Le pasamos a la bala como x e y la zona desde donde se va a disparar
+      disparo[tiro].y=yi+nave.posy[0]*nave.tam; //En mi caso, xi es el centro, por lo que le sumo la coord local y lo multiplico por el 
+                                                //tamaño para conseguir el punto y que salga del sitio correcto
+      disparo[tiro].angulo=nave.angulo;   //Le pasamos un angulo a la bala
+    }
+    tiro++; //Siguiente bala
+}
+-------------------------
+void dibujadisparo(){   //Dibujar y calcular posiciones de bala
+  float xi,yi;
+  for(int i=0;i<100;i++){   //DIBUJAMOS TODAS LAS BALAS, DESDE LA 0 A LA 100
+  //Tenemos un punto inicial de la bala, que la tenemos guardada en el struct correspondiente, el problema esta en guardar a donde
+  //Se tiene que mover usando su angulo, la coordenada inicial, la llamaremos (x,y) usando el angulo consigue una coordenada secundaria
+  //llamada (xi,yi), que esta a (en este caso) 5 pixels de distancia de la original en direccion al angulo. Usando el seno y el coseno
+  //(los +90 -90 no se por que, pero sin ellos dispara a cuenca si apuntas a pamplona) conseguimios la coordenada contigua con el angulo
+  //recordando que sin y cos funcionan con 1 de maximo, multiplicamos por el tamaño de disparo deseado, y le sumamos la coordenada original
+  //por que sino todo disparo se realizaria alrededor del 0,0. Para acabar cambiamos el struct guardando la coordenada xi,yi como coordenada
+  //principal para que el disparo continue
+  
+    xi=disparo[i].x+5*cos((disparo[i].angulo+90)*pi/180);
+    yi=disparo[i].y+5*sin((disparo[i].angulo-90)*pi/180); //calcula posicion 2
+    ESAT::DrawLine(disparo[i].x,disparo[i].y,xi,yi);  //dibuja disparo
+    disparo[i].x=xi;
+    disparo[i].y=yi;  //envia disparo a la siguiente coordenada
+  }
+}
+-------------------------
+if(ESAT::IsSpecialKeyDown(ESAT::kSpecialKey_Space)){  //Para el main, hace que la nave dispare
+      dispara(nave.xc,nave.yc,nave.angulo);     //parametros: CENTRO de la nave en LOCAL(x,y), angulo de la nave
+                                                //angulos (arriba=0,izquierda=90,abajo=180,derecha=270...) pueden ser positivos o negativos
+                                                //los angulos pueden ir hasta el infinito
+      if(tiro>=100){tiro=0;}    //Permite disparar 100 balas, al llegar a disparar la bala 100 se vuelve 0 para que se pueda disparar de nuevo
+                                //la bala 0, tiro es una variable global
+    }
+-------------------------
+*/  FIN DE DISPARO DE IMANOL
