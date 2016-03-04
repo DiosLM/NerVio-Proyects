@@ -1,0 +1,38 @@
+librerias
+
+tipos de enemigos(structs y funciones)
+tipos de naves(structs y funciones)
+disparos(tipos y niveles)
+movimiento(simple, con posibilidad de inclinacion de sprite)
+fondo(plano,a capas, con desplazamiento... aun por ver)
+interfaz!!(in game lo mas basico posible)
+Menu de inicio (para seleccionar modo, opciones)
+dificultades(si modo arcade, con progresion lineal, si modo historia, dificultad escalada por nivel)
+farmeo(original, no repetitivo)
+semipatrones(de generacion de naves enemigas, con semillas modificadas por stage o por progresion)
+muerte(o por vida, o por un toque y vidas)
+IA(jejeje fuego muerte y destruccion (java))
+
+*(habilidades)
+
+in game
+
+objetos de boost (mejoras)
+balancear la progresion
+*(posibilidad de poner un mando)
+*(Posible historia)
+
+
+
+desarrollo
+
+0-motor
+1-naves
+2-movimiento
+3-disparo
+4-enemigo<-mas tiempo
+5-muerte
+6-interfaz
+7-mapa
+8-objetos
+9-balanceo
